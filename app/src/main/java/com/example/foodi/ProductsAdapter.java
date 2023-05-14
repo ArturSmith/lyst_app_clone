@@ -9,10 +9,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class productsAdapter extends RecyclerView.Adapter<productsAdapter.ProductHolder> {
+public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ProductHolder> {
 
     private List<Product> products = new ArrayList<>();
 
@@ -34,6 +36,13 @@ public class productsAdapter extends RecyclerView.Adapter<productsAdapter.Produc
 
     @Override
     public void onBindViewHolder(@NonNull ProductHolder holder, int position) {
+        Product product = products.get(position);
+        Glide.with(holder.itemView)
+                .load(product.getImage())
+                .into(holder.image);
+        holder.price.setText(product.getPrice());
+        holder.title.setText(product.getTitle());
+        holder.description.setText(product.getDescription());
 
     }
 
@@ -46,14 +55,15 @@ public class productsAdapter extends RecyclerView.Adapter<productsAdapter.Produc
 
         private final ImageView image;
         private final TextView price;
-        private final TextView brand;
+        private final TextView title;
         private final TextView description;
+
 
         public ProductHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.imageViewProduct);
             price = itemView.findViewById(R.id.textViewProductPrice);
-            brand = itemView.findViewById(R.id.textViewProductBrand);
+            title = itemView.findViewById(R.id.textViewProductBrand);
             description = itemView.findViewById(R.id.textViewProductDescription);
         }
     }
